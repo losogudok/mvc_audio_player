@@ -1,0 +1,28 @@
+.song-description {
+	transition: all 0.3s ease;
+	background-color: white;
+	border-right: 1px solid #f6f5f3;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	overflow: auto;
+	flex-grow: 1;
+
+	&__title {
+		font-weight: bold;
+		margin-top: 10px;
+	}
+
+	&__artist {
+		font-size: 14px;
+	}
+
+	&__cover {
+		width: 300px;
+		height: 300px;
+		border: 1px solid #f6f5f3;
+	}
+}
+
+

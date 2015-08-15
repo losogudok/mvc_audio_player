@@ -1,0 +1,13 @@
+.drop-hint {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+
+	&__icon {
+		width: 100px;
+		height: 100px;
+		fill: black;
+	}
+}

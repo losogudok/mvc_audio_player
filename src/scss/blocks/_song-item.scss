@@ -1,0 +1,50 @@
+.song-item {
+	border-bottom: 1px solid #ccc;
+	min-height: 60px;
+	padding: 0 10px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+
+	&_selected {
+		background-color: #C5CAE9;
+	}
+
+	&__cover-wrapper {
+		height: 40px;
+		width: 40px;
+		margin-right: 20px;
+	}
+
+	&__cover {
+		width: 40px;
+		height: 40px;
+	}
+
+	&__info {
+		flex-grow: 1;
+	}
+
+	&__title {
+		font-weight: bold;
+	}
+
+	&__artist {
+		font-size: 14px;
+	}
+
+	&__duration {
+		color: #666;
+	}
+
+	&__controls {
+		display: none;
+	}
+
+	&:hover {
+		background-color: #C5CAE9;
+	}
+}
+
+
+

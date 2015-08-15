@@ -1,0 +1,12 @@
+.songs-list {
+	background-color: white;
+	transition: all 0.3s ease;
+	border-left: 1px solid #f6f5f3;
+	overflow: auto;
+	flex-grow: 2;
+
+	&__placeholder {
+		text-align: center;
+		padding-top: 10px;
+	}
+}

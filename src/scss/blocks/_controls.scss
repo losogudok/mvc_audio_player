@@ -1,0 +1,10 @@
+.controls {
+	display: flex;
+	align-items: center;
+
+	&__equalizer {
+		margin-left: 20px;
+		width: 26px;
+		height: 26px;
+	}
+}

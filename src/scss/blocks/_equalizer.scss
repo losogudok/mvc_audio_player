@@ -1,0 +1,51 @@
+.equalizer {
+	width: 600px;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 0 30px;
+
+	&__control {
+		margin-right: 5px;
+		-webkit-user-select: none;
+
+		&_first {
+			margin-right: 40px;
+		}
+	}
+
+	&__label {
+		height: 40px;
+		width: 40px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #666;
+	}
+
+	&__icon {
+		fill: #929292;
+	}
+
+	&__slide {
+		width: 6px;
+		height: 220px;
+		border-radius: 3px;
+		position: relative;
+		background-color: #f6f5f3;
+		margin: 0 auto;
+	}
+
+	&__thumb {
+		width: 20px;
+		height: 20px;
+		border-radius: 33%;
+		background-color: white;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+		position: absolute;
+		top: 100px;
+		left: -7px;
+		cursor: pointer;
+	}
+}

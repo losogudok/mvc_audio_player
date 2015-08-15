@@ -1,0 +1,30 @@
+.player {
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	&__header {
+		background-color: #C7CEFF;
+		padding: 10px 20px;
+		position: relative;
+	}
+
+	&__main {
+		flex: 1;
+		display: flex;
+		justify-content: space-between;
+		overflow: hidden;
+
+		&_hint-showed {
+			justify-content: center;
+		}
+	}
+
+	&__footer {
+		padding: 10px;
+		background-color: #C7CEFF;
+	}
+
+}
