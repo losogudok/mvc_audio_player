@@ -3,6 +3,7 @@ var browserify = require("browserify");
 var babelify = require("babelify");
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('watch', function() {
 	gulp.watch('./src/js/**/*.js', function() {
@@ -21,11 +22,10 @@ gulp.task('watch', function() {
 	gulp.watch('./src/scss/**/*.scss', function() {
 		gulp.src('./src/scss/main.scss')
 			.pipe(sass({outputStyle: 'expanded'}))
+			.pipe(autoprefixer({
+				browsers: ['last 2 versions']
+			}))
 			.pipe(gulp.dest('build/css'));
 	});
 
 });
-
-
-
-

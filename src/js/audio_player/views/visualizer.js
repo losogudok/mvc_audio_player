@@ -44,11 +44,15 @@ class VisualizerView extends BaseView {
 		var v;
 		var y;
 		var sliceWidth;
+		//var dataArray = new Uint8Array(audio.analyser.frequencyBinCount);
+
+
 		var bufferLength = audio.analyser.fftSize;
 		var dataArray = new Uint8Array(bufferLength);
 
 		this.frameId = requestAnimationFrame(this.draw.bind(this));
 		audio.analyser.getByteTimeDomainData(dataArray);
+		//audio.analyser.getByteFrequencyData(dataArray);
 		this.clearCanvas();
 		this.canvasCtx.lineWidth = 2;
 		this.canvasCtx.strokeStyle = '#6161EF';

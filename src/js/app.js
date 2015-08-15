@@ -58,6 +58,7 @@ var songDetailsView = new SongDetailsView({
 	model: playerState
 });
 
+
 // Controls
 var controlsView = new ControlsView({
 	el: dom.qs('.js-controls', playerView.el),
@@ -82,5 +83,7 @@ var visualizerView = new VisualizerView({
 	el: dom.qs('.js-visualizer', playerView.el),
 	model: playerState
 });
+
+
 
 

@@ -7,8 +7,7 @@ class BaseController {
 		this.bindListeners();
 	}
 
-	bindListeners() {
-	}
+	bindListeners() {}
 }
 
 module.exports = BaseController;

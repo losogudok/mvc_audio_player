@@ -39,12 +39,8 @@ class SongsListView extends BaseView {
 
 	selectSong(songEl) {
 		$$.toArray(songEl.parentNode.children)
-			.filter(el = > el !== songEl
-	)
-	.
-		forEach(el = > dom.removeClass(el, 'song-item_selected')
-	)
-		;
+			.filter(el => el !== songEl)
+			.forEach(el => dom.removeClass(el, 'song-item_selected'));
 
 		dom.addClass(songEl, 'song-item_selected');
 	}
@@ -76,9 +72,7 @@ class SongsListView extends BaseView {
 			seconds = '0' + seconds;
 		}
 
-		return `${minutes}
-	:${seconds}
-	`;
+		return `${minutes}:${seconds}`;
 	}
 }
 

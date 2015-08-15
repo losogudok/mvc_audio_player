@@ -21,36 +21,27 @@ var dom = {
 	hasClass: function(el, className) {
 		return el.classList.contains(className);
 	},
-	hide: function(...elems
-)
-{
-	elems.forEach(function(item) {
-		item.style.display = 'none';
-	});
-}
-,
-show: function(
-...
-elems
-)
-{
-	elems.forEach(function(item) {
-		item.style.display = '';
-	});
-}
-,
-closest: function(el, selector) {
-	if(el.closest) return el.closest(selector);
+	hide: function(...elems) {
+		elems.forEach(function(item) {
+			item.style.display = 'none';
+		});
+	},
+	show: function(...elems) {
+		elems.forEach(function(item) {
+			item.style.display = '';
+		});
+	},
+	closest: function(el, selector) {
+		if(el.closest) return el.closest(selector);
 
-	var parentNode = el;
-	var matches;
+		var parentNode = el;
+		var matches;
 
-	while((matches = parentNode && parentNode.matches) && !parentNode.matches(selector)) {
-		parentNode = parentNode.parentNode;
+		while((matches = parentNode && parentNode.matches) && !parentNode.matches(selector)) {
+			parentNode = parentNode.parentNode;
+		}
+		return matches ? parentNode : null;
 	}
-	return matches ? parentNode : null;
-}
-}
-;
+};
 
 module.exports = dom;

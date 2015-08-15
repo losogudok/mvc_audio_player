@@ -31,20 +31,14 @@ class PlayerController extends BaseController {
 	isAudioFile(file) {
 		var support = false;
 
-		Audio.SUPPORTED_FORMATS.forEach(format = > {
-			if(file.name.search(format.ext) !== -1
-	)
-		{
-			support = true;
-		}
+		Audio.SUPPORTED_FORMATS.forEach(format => {
+			if(file.name.search(format.ext) !== -1) {
+				support = true;
+			}
+		});
+
+		return support;
 	}
-
-)
-	;
-
-		return
-	support;
-}
 }
 
 module.exports = PlayerController;

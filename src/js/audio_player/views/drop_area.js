@@ -48,6 +48,7 @@ class DropAreaView extends BaseView {
 		this.elems.dropHint.ondragleave = null;
 		dom.hide(this.elems.dropHint);
 
+
 		dom.show(this.elems.visualizer);
 		dom.show(this.elems.songDetails);
 		dom.show(this.elems.songsList);

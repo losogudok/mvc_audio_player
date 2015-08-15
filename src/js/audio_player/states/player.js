@@ -11,7 +11,9 @@ class PlayerState {
 		this.playingSong = null;
 		this.isVisualizing = false;
 		this.haveSongs = false;
-		this.equalizer = {};
+		this.equalizer = {
+
+		};
 		this.observeProperties();
 		this.bindListeners();
 	}
