@@ -28,13 +28,13 @@ class PlayerState {
 		this.bindListeners();
 	}
 
-	observeProperties(obj) {
-		Object.keys(obj).forEach(function(key) {
-			obj['_' + key] = obj[key];
+	observeProperties() {
+		Object.keys(this).forEach(function(key) {
+			this['_' + key] = this[key];
 
-			Object.defineProperty(obj, key, {
+			Object.defineProperty(this, key, {
 				get: function() {
-					return obj['_' + key];
+					return this['_' + key];
 				},
 				set: function(value) {
 					if(this['_' + key] === value) return;
