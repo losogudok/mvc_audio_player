@@ -27,8 +27,14 @@ class PlayerView extends BaseView {
 	}
 
 	onEqualizerChanged(e) {
+		var filterIndex;
+
 		if (e.type === 'gain') {
 			this.gain.gain.value = e.value;
+		}
+		else {
+			filterIndex = FREQUENCIES.indexOf(Number(e.type));
+			this.filters[filterIndex].gain.value = e.value;
 		}
 	}
 

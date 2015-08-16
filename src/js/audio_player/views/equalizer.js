@@ -15,12 +15,12 @@ class EqualizerView extends BaseView {
 			'170':  dom.qs('[data-type="170"]', this.el),
 			'310':  dom.qs('[data-type="310"]', this.el),
 			'600':  dom.qs('[data-type="600"]', this.el),
-			'1K':  dom.qs('[data-type="1K"]', this.el),
-			'3K':  dom.qs('[data-type="3K"]', this.el),
-			'6K':  dom.qs('[data-type="6K"]', this.el),
-			'12K':  dom.qs('[data-type="12K"]', this.el),
-			'14K':  dom.qs('[data-type="14K"]', this.el),
-			'16K':  dom.qs('[data-type="16K"]', this.el)	
+			'1000':  dom.qs('[data-type="1000"]', this.el),
+			'3000':  dom.qs('[data-type="3000"]', this.el),
+			'6000':  dom.qs('[data-type="6000"]', this.el),
+			'12000':  dom.qs('[data-type="12000"]', this.el),
+			'14000':  dom.qs('[data-type="14000"]', this.el),
+			'16000':  dom.qs('[data-type="16000"]', this.el)
 		};
 
 		this.slidersCoords = {
@@ -29,12 +29,12 @@ class EqualizerView extends BaseView {
 			'170':  this.sliders['170'].getBoundingClientRect(),
 			'310':  this.sliders['310'].getBoundingClientRect(),
 			'600':  this.sliders['600'].getBoundingClientRect(),
-			'1K':  this.sliders['1K'].getBoundingClientRect(),
-			'3K':  this.sliders['3K'].getBoundingClientRect(),
-			'6K':  this.sliders['6K'].getBoundingClientRect(),
-			'12K':  this.sliders['12K'].getBoundingClientRect(),
-			'14K':  this.sliders['14K'].getBoundingClientRect(),
-			'16K':  this.sliders['16K'].getBoundingClientRect()
+			'1000':  this.sliders['1000'].getBoundingClientRect(),
+			'3000':  this.sliders['3000'].getBoundingClientRect(),
+			'6000':  this.sliders['6000'].getBoundingClientRect(),
+			'12000':  this.sliders['12000'].getBoundingClientRect(),
+			'14000':  this.sliders['14000'].getBoundingClientRect(),
+			'16000':  this.sliders['16000'].getBoundingClientRect()
 		};
 
 		this.activeSlider = null;

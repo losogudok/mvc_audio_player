@@ -2,6 +2,7 @@
 
 var BaseController = require('./base');
 var SLIDER_HIGHEST = 200;
+var EQUALIZER_RANGE = 12;
 
 
 class EqualizeController extends BaseController {
@@ -10,7 +11,15 @@ class EqualizeController extends BaseController {
 	}
 
 	sliderChanged(e) {
-		this.model.equalizer[e.type] = e.value / SLIDER_HIGHEST;
+		var result;
+
+		if (e.type === 'gain') {
+			result = e.value / SLIDER_HIGHEST;
+		}
+		else {
+			result = e.value * EQUALIZER_RANGE * 2 / SLIDER_HIGHEST - EQUALIZER_RANGE;
+		}
+		this.model.equalizer[e.type] = result;
 	}
 }
 
