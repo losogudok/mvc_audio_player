@@ -6,11 +6,20 @@ var dom = require('../../dom');
 
 class BaseView {
 	constructor(options) {
+		var childNodes;
+		var i;
+
 		this.el = options.el;
 		this.model = options.model;
 		this.subviews = options.subviews;
 		if(options.template) {
-			this.template = options.template.content.firstElementChild.cloneNode(true);
+			childNodes =  options.template.content.childNodes;
+			for (i = 0; i < childNodes.length; i++) {
+				if (childNodes[i].nodeType === 1) {
+					this.template = childNodes[i].cloneNode(true);
+					break;
+				}
+			}
 		}
 	}
 
