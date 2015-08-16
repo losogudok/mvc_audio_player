@@ -47,9 +47,14 @@ class EqualizerView extends BaseView {
 	}
 
 	bindListeners() {
+		this.model.on('isVisualizing:changed', this.onVisualizingChanged, this);
 		window.onresize = this.recalcSlidersCoords.bind(this);
 		this.el.onmousedown = this.onThumbMouseDown.bind(this);
 		this.el.ondragstart = this.onDragStart.bind(this);
+	}
+
+	onVisualizingChanged() {
+		 setTimeout(this.recalcSlidersCoords.bind(this), 0);
 	}
 
 	onThumbMouseDown(e) {
@@ -71,7 +76,6 @@ class EqualizerView extends BaseView {
 		var type = this.activeSlider.dataset.type;
 		var y = e.clientY - this.sliderShift.shiftY - this.slidersCoords[type].top;
 		this.moveThumb(y);
-		this.trigger('slider:changed', {type: type, value: y});
 	}
 
 	onDocumentMouseUp(e) {
@@ -97,8 +101,10 @@ class EqualizerView extends BaseView {
 	}
 
 	moveThumb(y) {
+		var type = this.activeSlider.dataset.type;
 		y = this.checkCoords(y);
 		this.activeThumb.style.top = y + 'px';
+		this.trigger('slider:changed', {type: type, value: Math.abs(y - 200)});
 	}
 
 	onDragStart() {

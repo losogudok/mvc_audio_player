@@ -23,6 +23,13 @@ class PlayerView extends BaseView {
 	bindListeners() {
 		this.model.on('isVisualizing:changed', this.onVisualizingChanged, this);
 		this.model.on('playingSong:changed', this.onPlayingSongChanged, this);
+		this.model.on('equalizer:changed', this.onEqualizerChanged, this);
+	}
+
+	onEqualizerChanged(e) {
+		if (e.type === 'gain') {
+			this.gain.gain.value = e.value;
+		}
 	}
 
 	onVisualizingChanged(isVisualizing) {
@@ -31,8 +38,8 @@ class PlayerView extends BaseView {
 			dom.show(this.elems.visualizer);
 		}
 		else {
-			dom.show(this.elems.equalizer);
 			dom.hide(this.elems.visualizer);
+			dom.show(this.elems.equalizer);
 		}
 	}
 

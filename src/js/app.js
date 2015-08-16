@@ -17,6 +17,7 @@ var ControlsController = require('./audio_player/controllers/controls');
 var VisualizerView = require('./audio_player/views/visualizer');
 
 var EqualizerView = require('./audio_player/views/equalizer');
+var EqualizerController = require('./audio_player/controllers/equalizer');
 
 var dom = require('./dom');
 
@@ -75,6 +76,11 @@ var controlsController = new ControlsController({
 
 var equalizerView = new EqualizerView({
 	el: dom.qs('.js-equalizer', playerView.el),
+	model: playerState
+});
+
+var equalizerController = new EqualizerController({
+	view: equalizerView,
 	model: playerState
 });
 

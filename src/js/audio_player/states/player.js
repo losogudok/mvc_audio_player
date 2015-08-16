@@ -24,29 +24,22 @@ class PlayerState {
 			'14K':  0,
 			'16K':  0
 		};
-		this.observeProperties();
+		$$.observeProperties(this);
+		$$.assign(this.equalizer, Events);
+		$$.observeProperties(this.equalizer);
 		this.bindListeners();
 	}
 
-	observeProperties() {
-		Object.keys(this).forEach(function(key) {
-			this['_' + key] = this[key];
+	bindListeners() {
+		this.equalizer.on('all', function(eventType, value){
+			var type = eventType.split(":")[0];
 
-			Object.defineProperty(this, key, {
-				get: function() {
-					return this['_' + key];
-				},
-				set: function(value) {
-					if(this['_' + key] === value) return;
-
-					this['_' + key] = value;
-					this.trigger(key + ':changed', value);
-				}
+			this.trigger('equalizer:changed', {
+				type: type,
+				value: value
 			});
 		}, this);
-	}
 
-	bindListeners() {
 		this.songs.on('song:add', function(song) {
 			this.trigger('song:add', song);
 			if (this.songs.length === 1) {

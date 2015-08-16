@@ -1,3 +1,5 @@
+"use strict";
+
 var fs = require("fs");
 var browserify = require("browserify");
 var babelify = require("babelify");

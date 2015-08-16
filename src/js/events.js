@@ -1,3 +1,5 @@
+"use strict";
+
 var subscribers = new Map();
 
 var Events = {
@@ -56,9 +58,17 @@ var Events = {
 
 		if(subscribers.has(this)) {
 			item = subscribers.get(this);
+
 			if(item[type]) {
 				item[type].forEach(function(event) {
 					var context = event.context || this;
+					event.callback.apply(context, args);
+				}, this);
+			}
+			if (item.all) {
+				item.all.forEach(function(event) {
+					var context = event.context || this;
+					args.unshift(type);
 					event.callback.apply(context, args);
 				}, this);
 			}
