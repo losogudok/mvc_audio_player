@@ -2,7 +2,7 @@
 
 var $$ = require('../../utils');
 var Events = require('../../events');
-var dom = require('../../api/dom');
+var dom = require('../../dom');
 
 class BaseView {
 	constructor(options) {

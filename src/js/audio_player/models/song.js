@@ -5,10 +5,10 @@ class Song {
 		this.id = id;
 		this.audioBuffer = data.audioBuffer;
 		this.fileName = data.fileName;
-		this.title = data.title || this.fileName;
+		this.title = data.title || '';
 		this.artist = data.artist || '';
 		this.duration = Math.round(data.duration);
-		this.picture = data.picture || '';
+		this.picture = data.picture || null;
 		id++;
 	}
 }

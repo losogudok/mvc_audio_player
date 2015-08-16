@@ -1,8 +1,5 @@
 "use strict";
 
-var $$ = require('../../utils');
-var Events = require('../../events');
-var dom = require('../../api/dom');
 var BaseController = require('./base');
 
 class SongsListController extends BaseController {

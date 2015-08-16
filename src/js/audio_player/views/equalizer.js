@@ -1,6 +1,6 @@
 "use strict";
 
-var dom = require('../../api/dom');
+var dom = require('../../dom');
 var $$ = require('../../utils');
 var BaseView = require('./base');
 
@@ -68,8 +68,10 @@ class EqualizerView extends BaseView {
 	}
 
 	onDocumentMouseMove(e) {
-		var y = e.clientY - this.sliderShift.shiftY - this.slidersCoords[this.activeSlider.dataset.type].top;
+		var type = this.activeSlider.dataset.type;
+		var y = e.clientY - this.sliderShift.shiftY - this.slidersCoords[type].top;
 		this.moveThumb(y);
+		this.trigger('slider:changed', {type: type, value: y});
 	}
 
 	onDocumentMouseUp(e) {
@@ -82,10 +84,12 @@ class EqualizerView extends BaseView {
 	}
 
 	checkCoords(y) {
+		var topEdge;
+
 		if(y < 0) {
 			y = 0;
 		}
-		var topEdge = this.activeSlider.offsetHeight - this.activeThumb.offsetHeight;
+		topEdge = this.activeSlider.offsetHeight - this.activeThumb.offsetHeight;
 		if(y > topEdge) {
 			y = topEdge;
 		}
@@ -95,7 +99,6 @@ class EqualizerView extends BaseView {
 	moveThumb(y) {
 		y = this.checkCoords(y);
 		this.activeThumb.style.top = y + 'px';
-		console.log(y);
 	}
 
 	onDragStart() {

@@ -1,3 +1,5 @@
+"use strict";
+
 var PlayerView = require('./audio_player/views/player');
 var PlayerState = require('./audio_player/states/player');
 
@@ -16,9 +18,8 @@ var VisualizerView = require('./audio_player/views/visualizer');
 
 var EqualizerView = require('./audio_player/views/equalizer');
 
-var dom = require('./api/dom');
+var dom = require('./dom');
 
-require('./api/audio').init();
 
 // Player State
 var playerState = new PlayerState();
@@ -83,7 +84,3 @@ var visualizerView = new VisualizerView({
 	el: dom.qs('.js-visualizer', playerView.el),
 	model: playerState
 });
-
-
-
-

@@ -1,8 +1,5 @@
 "use strict";
 
-var $$ = require('../../utils');
-var Events = require('../../events');
-var dom = require('../../api/dom');
 var BaseController = require('./base');
 
 class ControlsController extends BaseController {
@@ -18,6 +15,8 @@ class ControlsController extends BaseController {
 			case 'stop':
 				this.model.playingSong = null;
 				break;
+			case 'eq':
+				this.model.isVisualizing = !this.model.isVisualizing;
 		}
 	}
 }

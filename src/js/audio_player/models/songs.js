@@ -5,6 +5,7 @@ var Song = require('./song');
 class Songs {
 	constructor() {
 		this.songs = [];
+		this.length = 0;
 	}
 
 	getSong(id) {
@@ -18,6 +19,7 @@ class Songs {
 	addSong(data) {
 		var song = new Song(data);
 		this.songs.push(song);
+		this.length++;
 		this.trigger('song:add', song);
 	}
 
@@ -25,6 +27,7 @@ class Songs {
 		var song = this.getSong(id);
 		if(song !== undefined) {
 			this.songs.splice(song, 1);
+			this.length--;
 			this.trigger('song:removed', song);
 		}
 	}

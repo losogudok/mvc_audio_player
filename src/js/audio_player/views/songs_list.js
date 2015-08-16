@@ -2,7 +2,7 @@
 
 var $$ = require('../../utils');
 var Events = require('../../events');
-var dom = require('../../api/dom');
+var dom = require('../../dom');
 var BaseView = require('./base');
 
 class SongsListView extends BaseView {
@@ -52,7 +52,7 @@ class SongsListView extends BaseView {
 		var cover = dom.qs('.js-song-cover', songEl);
 		var duration = dom.qs('.js-song-duration', songEl);
 
-		title.textContent = song.title;
+		title.textContent = song.title || song.fileName;
 		artist.textContent = song.artist;
 
 		duration.textContent = this.formatDuration(song.duration);

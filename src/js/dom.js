@@ -1,4 +1,6 @@
-var $$ = require('../utils');
+"use strict";
+
+var $$ = require('./utils');
 
 var dom = {
 	byId: function(id) {

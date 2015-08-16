@@ -1,7 +1,7 @@
 "use strict";
 
 var BaseView = require('./base');
-var dom = require('../../api/dom');
+var dom = require('../../dom');
 
 class ControlsView extends BaseView {
 	constructor(options) {

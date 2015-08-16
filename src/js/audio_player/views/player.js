@@ -1,17 +1,39 @@
 "use strict";
 
 var BaseView = require('./base');
-var Audio = require('../../api/audio');
+var audioContext = require('../../audio').getAudioContext();
+var FREQUENCIES = [60, 170, 310, 600, 1000, 3000, 6000, 12000, 14000, 16000];
+var analyser = require('../../audio_analyser');
+var dom = require('../../dom');
 
 class PlayerView extends BaseView {
 
 	constructor(options) {
 		super(options);
+		this.gain = audioContext.createGain();
+		this.filters = this.createFilters(FREQUENCIES);
+		this.analyser = analyser;
+		this.elems = {
+			visualizer: dom.qs('.js-visualizer', this.el),
+			equalizer: dom.qs('.js-equalizer', this.el)
+		};
 		this.bindListeners();
 	}
 
 	bindListeners() {
+		this.model.on('isVisualizing:changed', this.onVisualizingChanged, this);
 		this.model.on('playingSong:changed', this.onPlayingSongChanged, this);
+	}
+
+	onVisualizingChanged(isVisualizing) {
+		if (isVisualizing) {
+			dom.hide(this.elems.equalizer);
+			dom.show(this.elems.visualizer);
+		}
+		else {
+			dom.show(this.elems.equalizer);
+			dom.hide(this.elems.visualizer);
+		}
 	}
 
 	onPlayingSongChanged(song) {
@@ -24,11 +46,48 @@ class PlayerView extends BaseView {
 	}
 
 	playSong(song) {
-		Audio.play(song.audioBuffer);
+		this.play(song.audioBuffer);
 	}
 
 	stopSong() {
-		Audio.stop();
+		this.stop();
+	}
+
+	createFilters(frequencies) {
+		var filters = frequencies.map(this.createFilter);
+
+		filters.reduce(function(prev, curr) {
+			prev.connect(curr);
+			return curr;
+		});
+
+		return filters;
+	}
+
+	createFilter(frequency) {
+		var filter = audioContext.createBiquadFilter();
+
+		filter.type = 'peaking';
+		filter.frequency.value = frequency;
+		filter.Q.value = 1;
+		filter.gain.value = 0;
+
+		return filter;
+	}
+
+	play(audioBuffer) {
+		this.audioSource = audioContext.createBufferSource();
+		this.audioSource.buffer = audioBuffer;
+		this.audioSource.connect(this.gain);
+
+		this.gain.connect(this.filters[0]);
+		this.filters[this.filters.length - 1].connect(this.analyser);
+		this.analyser.connect(audioContext.destination);
+		this.audioSource.start(0);
+	}
+
+	stop() {
+		this.audioSource.stop(0);
 	}
 }
 
