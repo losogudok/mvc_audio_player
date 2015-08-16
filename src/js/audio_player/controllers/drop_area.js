@@ -14,13 +14,16 @@ class PlayerController extends BaseController {
 	onFilesAdd(files) {
 		var self = this;
 
-		this.filterAudioFiles(files).forEach(function(file) {
-			Promise.all([this.getSongInfo(file, ["title", "artist", "picture"]), this.decodeSong(file)])
+		self.filterAudioFiles(files).forEach(function(file) {
+			Promise.all([self.getSongInfo(file, ["title", "artist", "picture"]), self.decodeSong(file)])
 				.then(function(values) {
 					$$.assign(values[0], values[1], {fileName: file.name});
 					self.model.addSong(values[0]);
+				})
+				.catch(function(err){
+					self.model.errorMessage = err +' in file ' + file.name;
 				});
-		}, this);
+		});
 	}
 
 	filterAudioFiles(files) {
@@ -86,17 +89,20 @@ class PlayerController extends BaseController {
 			reader.onload = function() {
 				var buffer = this.result;
 
-				audioContext.decodeAudioData(buffer, audioBuffer => {
+				audioContext.decodeAudioData(buffer, function success(audioBuffer) {
 					resolve({
 						audioBuffer: audioBuffer,
 						sampleRate: audioBuffer.sampleRate,
 						duration: audioBuffer.duration
 					});
+				},
+				function error(err) {
+					reject('Audio decode error');
 				});
 			};
 
 			reader.onerror = function() {
-				reject(reader.error);
+				reject('Error while reading file');
 			};
 		});
 	}

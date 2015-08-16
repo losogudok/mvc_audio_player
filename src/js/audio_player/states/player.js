@@ -11,6 +11,7 @@ class PlayerState {
 		this.playingSong = null;
 		this.isVisualizing = true;
 		this.haveSongs = false;
+		this.errorMessage = '';
 		this.equalizer = {
 			'gain':  0,
 			'60':  0,

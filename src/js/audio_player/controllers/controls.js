@@ -17,6 +17,7 @@ class ControlsController extends BaseController {
 				break;
 			case 'eq':
 				this.model.isVisualizing = !this.model.isVisualizing;
+				break;
 		}
 	}
 }

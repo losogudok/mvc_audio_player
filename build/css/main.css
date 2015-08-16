@@ -320,3 +320,29 @@ html, body {
   border: 1px solid #f6f5f3;
   display: block;
 }
+
+.notification {
+  position: fixed;
+  transition: top 0.3s ease;
+  width: 300px;
+  height: 75px;
+  background-color: white;
+  top: -95px;
+  right: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 1px black;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  color: #b00002;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.notification_showed {
+  top: 20px;
+}
