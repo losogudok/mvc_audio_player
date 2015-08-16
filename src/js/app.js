@@ -2,6 +2,7 @@
 
 var PlayerView = require('./audio_player/views/player');
 var PlayerState = require('./audio_player/states/player');
+var PlayerController = require('./audio_player/controllers/player');
 
 var DropAreaView = require('./audio_player/views/drop_area');
 var DropAreaController = require('./audio_player/controllers/drop_area');
@@ -30,6 +31,11 @@ var playerState = new PlayerState();
 // Main
 var playerView = new PlayerView({
 	el: dom.byId('audioPlayer'),
+	model: playerState
+});
+
+var playerController = new PlayerController({
+	view: playerView,
 	model: playerState
 });
 
@@ -62,7 +68,6 @@ var songDetailsView = new SongDetailsView({
 	model: playerState
 });
 
-
 // Controls
 var controlsView = new ControlsView({
 	el: dom.qs('.js-controls', playerView.el),
@@ -75,7 +80,6 @@ var controlsController = new ControlsController({
 });
 
 // Equalizer
-
 var equalizerView = new EqualizerView({
 	el: dom.qs('.js-equalizer', playerView.el),
 	model: playerState
@@ -87,14 +91,12 @@ var equalizerController = new EqualizerController({
 });
 
 // Visualizer
-
 var visualizerView = new VisualizerView({
 	el: dom.qs('.js-visualizer', playerView.el),
 	model: playerState
 });
 
 // Notification
-
 var notificationView = new NotificationView({
 	el: dom.qs('.js-notification', playerView.el),
 	model: playerState

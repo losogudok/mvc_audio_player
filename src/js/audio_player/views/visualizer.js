@@ -72,8 +72,7 @@ class VisualizerView extends BaseView {
 
 			x += sliceWidth;
 		}
-		//this.canvasCtx.lineTo(this.canvasW, this.canvasH / 2);
-		this.canvasCtx.closePath();
+		this.canvasCtx.lineTo(this.canvasW, this.canvasH / 2);
 		this.canvasCtx.stroke();
 	}
 }

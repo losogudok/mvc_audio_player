@@ -59,11 +59,24 @@ class PlayerView extends BaseView {
 	}
 
 	playSong(song) {
-		this.play(song.audioBuffer);
+		var audioBuffer = song.audioBuffer;
+		var self = this;
+
+		this.audioSource = audioContext.createBufferSource();
+		this.audioSource.buffer = audioBuffer;
+		this.audioSource.connect(this.gain);
+		this.gain.connect(this.filters[0]);
+		this.filters[this.filters.length - 1].connect(this.analyser);
+		this.analyser.connect(audioContext.destination);
+		this.audioSource.start(0);
+		this.timerId = setTimeout(function(){
+			self.trigger('song:end');
+		}, song.duration * 1000);
 	}
 
 	stopSong() {
-		this.stop();
+		clearTimeout(this.timerId);
+		this.audioSource.stop(0);
 	}
 
 	createFilters(frequencies) {
@@ -86,21 +99,6 @@ class PlayerView extends BaseView {
 		filter.gain.value = 0;
 
 		return filter;
-	}
-
-	play(audioBuffer) {
-		this.audioSource = audioContext.createBufferSource();
-		this.audioSource.buffer = audioBuffer;
-		this.audioSource.connect(this.gain);
-
-		this.gain.connect(this.filters[0]);
-		this.filters[this.filters.length - 1].connect(this.analyser);
-		this.analyser.connect(audioContext.destination);
-		this.audioSource.start(0);
-	}
-
-	stop() {
-		this.audioSource.stop(0);
 	}
 }
 
