@@ -1,13 +1,19 @@
 .equalizer {
-	width: 600px;
-	display: flex;
-	align-items: center;
-	box-sizing: border-box;
-	padding: 0 30px;
+    width: 600px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 30px;
+    justify-content: center;
+    flex-direction: column;
+
+	&__controls {
+		display: flex;
+	}
 
 	&__control {
 		margin-right: 5px;
-		-webkit-user-select: none;
+		user-select: none;
 
 		&_first {
 			margin-right: 40px;
@@ -44,8 +50,20 @@
 		border: 1px solid #ccc;
 		box-sizing: border-box;
 		position: absolute;
-		top: 100px;
+		bottom: 100px;
 		left: -7px;
+		cursor: pointer;
+	}
+
+	&__presets {
+	    display: flex;
+	    justify-content: space-between;
+	    width: 100%;
+	    margin-top: 20px;
+	}
+
+	&__preset {
+		color: #666;
 		cursor: pointer;
 	}
 }

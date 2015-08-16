@@ -7,7 +7,9 @@
 	cursor: pointer;
 
 	&_selected {
-		background-color: #C5CAE9;
+	    background-color: rgb(185, 38, 38);
+		border-bottom-color: rgb(185, 38, 38);
+		color: white;
 	}
 
 	&__cover-wrapper {
@@ -33,16 +35,13 @@
 		font-size: 14px;
 	}
 
-	&__duration {
-		color: #666;
-	}
-
 	&__controls {
 		display: none;
 	}
 
 	&:hover {
-		background-color: #C5CAE9;
+	    background-color: rgb(185, 38, 38);
+		border-bottom-color: rgb(185, 38, 38);
 	}
 }
 

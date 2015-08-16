@@ -3,38 +3,53 @@
 var dom = require('../../dom');
 var $$ = require('../../utils');
 var BaseView = require('./base');
+var consts = require('../../consts');
+var EQUALIZER_RANGE = consts.EQUALIZER_RANGE;
+var SLIDER_HIGHEST = consts.SLIDER_HIGHEST;
 
 class EqualizerView extends BaseView {
 
 	constructor(options) {
 		super(options);
+		var sliders;
 		
-		this.sliders = {
-			'gain':  dom.qs('[data-type="gain"]', this.el),
-			'60':  dom.qs('[data-type="60"]', this.el),
-			'170':  dom.qs('[data-type="170"]', this.el),
-			'310':  dom.qs('[data-type="310"]', this.el),
-			'600':  dom.qs('[data-type="600"]', this.el),
-			'1000':  dom.qs('[data-type="1000"]', this.el),
-			'3000':  dom.qs('[data-type="3000"]', this.el),
-			'6000':  dom.qs('[data-type="6000"]', this.el),
-			'12000':  dom.qs('[data-type="12000"]', this.el),
-			'14000':  dom.qs('[data-type="14000"]', this.el),
-			'16000':  dom.qs('[data-type="16000"]', this.el)
+		this.elems = {
+			sliders: {
+				'gain':  dom.qs('[data-type="gain"]', this.el),
+				'60':  dom.qs('[data-type="60"]', this.el),
+				'170':  dom.qs('[data-type="170"]', this.el),
+				'310':  dom.qs('[data-type="310"]', this.el),
+				'600':  dom.qs('[data-type="600"]', this.el),
+				'1000':  dom.qs('[data-type="1000"]', this.el),
+				'3000':  dom.qs('[data-type="3000"]', this.el),
+				'6000':  dom.qs('[data-type="6000"]', this.el),
+				'12000':  dom.qs('[data-type="12000"]', this.el),
+				'14000':  dom.qs('[data-type="14000"]', this.el),
+				'16000':  dom.qs('[data-type="16000"]', this.el)
+			},
+			presets: {
+				normal: dom.qs('[data-type="normal"]', this.el), 
+				pop: dom.qs('[data-type="pop"]', this.el), 
+				rock: dom.qs('[data-type="rock"]', this.el), 
+				jazz: dom.qs('[data-type="jazz"]', this.el), 
+				classic: dom.qs('[data-type="classic"]', this.el) 
+			}
 		};
+		
+		sliders = this.elems.sliders;
 
 		this.slidersCoords = {
-			'gain':  this.sliders['gain'].getBoundingClientRect(),
-			'60':  this.sliders['60'].getBoundingClientRect(),
-			'170':  this.sliders['170'].getBoundingClientRect(),
-			'310':  this.sliders['310'].getBoundingClientRect(),
-			'600':  this.sliders['600'].getBoundingClientRect(),
-			'1000':  this.sliders['1000'].getBoundingClientRect(),
-			'3000':  this.sliders['3000'].getBoundingClientRect(),
-			'6000':  this.sliders['6000'].getBoundingClientRect(),
-			'12000':  this.sliders['12000'].getBoundingClientRect(),
-			'14000':  this.sliders['14000'].getBoundingClientRect(),
-			'16000':  this.sliders['16000'].getBoundingClientRect()
+			'gain':  sliders['gain'].getBoundingClientRect(),
+			'60':  sliders['60'].getBoundingClientRect(),
+			'170':  sliders['170'].getBoundingClientRect(),
+			'310':  sliders['310'].getBoundingClientRect(),
+			'600':  sliders['600'].getBoundingClientRect(),
+			'1000':  sliders['1000'].getBoundingClientRect(),
+			'3000':  sliders['3000'].getBoundingClientRect(),
+			'6000':  sliders['6000'].getBoundingClientRect(),
+			'12000':  sliders['12000'].getBoundingClientRect(),
+			'14000':  sliders['14000'].getBoundingClientRect(),
+			'16000':  sliders['16000'].getBoundingClientRect()
 		};
 
 		this.activeSlider = null;
@@ -47,14 +62,39 @@ class EqualizerView extends BaseView {
 	}
 
 	bindListeners() {
+		this.model.on('equalizer:changed', this.onEqualizerChanged, this);
 		this.model.on('isVisualizing:changed', this.onVisualizingChanged, this);
 		window.onresize = this.recalcSlidersCoords.bind(this);
 		this.el.onmousedown = this.onThumbMouseDown.bind(this);
 		this.el.ondragstart = this.onDragStart.bind(this);
+		this.el.onclick = this.onPresetClick.bind(this);
+	}
+
+	onEqualizerChanged(e) {
+		var slider = this.elems.sliders[e.type];
+		var thumb = dom.qs('.js-thumb', slider);
+		var y;
+
+		if (e.type === 'gain') {
+			y = e.value * SLIDER_HIGHEST;
+		}
+		else {
+			y = (e.value + EQUALIZER_RANGE) / (EQUALIZER_RANGE * 2) * SLIDER_HIGHEST;
+		}
+		this.moveThumb(thumb, y);
 	}
 
 	onVisualizingChanged() {
 		 setTimeout(this.recalcSlidersCoords.bind(this), 0);
+	}
+
+	onPresetClick(e) {
+		var presetEl = e.target;
+		var presetType;
+
+		if (!dom.hasClass(presetEl, 'js-preset')) return;
+		presetType = presetEl.dataset.type;
+		this.trigger('preset:selected', presetType);
 	}
 
 	onThumbMouseDown(e) {
@@ -74,11 +114,13 @@ class EqualizerView extends BaseView {
 
 	onDocumentMouseMove(e) {
 		var type = this.activeSlider.dataset.type;
-		var y = e.clientY - this.sliderShift.shiftY - this.slidersCoords[type].top;
-		this.moveThumb(y);
+		var y = this.slidersCoords[type].bottom - e.clientY - this.sliderShift.shiftY;
+			y = this.checkCoords(y);
+		this.moveThumb(this.activeThumb, y);
+		this.trigger('slider:changed', {type: type, value: y});
 	}
 
-	onDocumentMouseUp(e) {
+	onDocumentMouseUp() {
 		document.onmousemove = null;
 		document.onmouseup = null;
 		this.activeSlider = null;
@@ -100,11 +142,8 @@ class EqualizerView extends BaseView {
 		return y;
 	}
 
-	moveThumb(y) {
-		var type = this.activeSlider.dataset.type;
-		y = this.checkCoords(y);
-		this.activeThumb.style.top = y + 'px';
-		this.trigger('slider:changed', {type: type, value: Math.abs(y - 200)});
+	moveThumb(thumb, y) {
+		thumb.style.bottom = y + 'px';
 	}
 
 	onDragStart() {
@@ -112,8 +151,10 @@ class EqualizerView extends BaseView {
 	}
 	
 	recalcSlidersCoords() {
-		Object.keys(this.sliders).forEach(function(key) {
-			this.slidersCoords[key] = this.sliders[key].getBoundingClientRect();
+		var sliders = this.elems.sliders;
+
+		Object.keys(sliders).forEach(function(key) {
+			this.slidersCoords[key] = sliders[key].getBoundingClientRect();
 		}, this);
 	}
 }

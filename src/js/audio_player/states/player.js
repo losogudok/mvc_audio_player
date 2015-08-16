@@ -9,7 +9,7 @@ class PlayerState {
 		this.songs = new Songs();
 		this.selectedSong = null;
 		this.playingSong = null;
-		this.isVisualizing = false;
+		this.isVisualizing = true;
 		this.haveSongs = false;
 		this.equalizer = {
 			'gain':  0,

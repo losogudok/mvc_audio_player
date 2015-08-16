@@ -23,6 +23,7 @@ class SongsListView extends BaseView {
 		var target = e.target;
 		var songEl = dom.closest(target, '.js-song');
 
+		if (!songEl) return;
 		this.selectSong(songEl);
 		this.trigger('song:selected', songEl.dataset.id);
 	}

@@ -8,7 +8,6 @@ class DropAreaView extends BaseView {
 
 	constructor(options) {
 		super(options);
-		this.haveSongs = false;
 
 		this.elems = {
 			dropHint: dom.qs('.js-drop-hint', this.el)
@@ -17,9 +16,6 @@ class DropAreaView extends BaseView {
 	}
 
 	bindListeners() {
-		this.model.on('haveSongs:changed', function(value){
-			this.haveSongs = value;
-		}, this);
 		this.el.ondrop = this.onFileDrop.bind(this);
 		this.el.ondragenter = this.onFileEnter.bind(this);
 		this.el.ondragover = this.onFileDrag.bind(this);
@@ -38,9 +34,7 @@ class DropAreaView extends BaseView {
 	}
 
 	onFileLeave() {
-		if (this.haveSongs) {
-			dom.hide(this.elems.dropHint);
-		}
+		dom.hide(this.elems.dropHint);
 	}
 
 	onFileEnter(e) {
